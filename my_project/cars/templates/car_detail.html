@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ car.brand }}</h1>
+
+{% if car.image %}
+  <img src="{{ car.image.url }}" alt="{{ car.title }}" style="display: block !important; visibility: visible !important;">
+{% else %}
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect fill='%23e9ecef' width='800' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='24' fill='%23adb5bd'%3ENo Image Available%3C/text%3E%3C/svg%3E" alt="No image" style="display: block !important; visibility: visible !important;">
+{% endif %}
+
+<dl>
+  <dt>Price</dt>
+  <dd>${{ car.price }}</dd>
+
+  <dt>Type</dt>
+  <dd>{{ car.type}} </dd>
+
+  <dt>Year</dt>
+  <dd>{{ car.year }}</dd>
+
+  <dt>Mileage</dt>
+  <dd>{{ car.mileage }}</dd>
+
+  <dt>Speed</dt>
+  <dd>{{ car.speed }} км/ч</dd>
+
+  <dt>Owner</dt>
+  <dd>{{ car.owner.username }}</dd>
+
+</dl>
+
+{% if user == car.owner %}
+  <a href="{% url 'cars:car_edit' car.id %}">Edit</a>
+  <a href="{% url 'cars:car_delete' car.id %}">Delete</a>
+{% elif user.is_seeker %}
+    <a href="{% url 'cars:send_deal_request' car.id %}">Send Deal Request</a>
+{% endif %}
+
+{% endblock %}

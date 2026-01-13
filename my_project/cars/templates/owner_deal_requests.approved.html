@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Approved requests </h1>
+
+<ul>
+  {% for req in approved_requests %}
+    <li>
+      <strong>{{ req.car.brand }}</strong>
+      <p>{{ req.comment }}</p>
+      <em>{{ req.status }}</em>
+
+      {% if req.status == 'approved' %}
+        <form method="post" action="{% url 'cars:owner_deal_requests_approved_list' %}">
+          {% csrf_token %}
+        </form>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

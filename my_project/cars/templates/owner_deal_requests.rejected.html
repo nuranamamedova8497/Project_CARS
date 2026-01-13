@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Rejected requests </h1>
+
+<ul>
+  {% for req in rejected_requests %}
+    <li>
+      <strong>{{ req.car.brand }}</strong>
+      <p>{{ req.comment }}</p>
+      <em>{{ req.status }}</em>
+
+      {% if req.status == 'rejected' %}
+        <form method="post" action="{% url 'cars:owner_deal_requests_rejected_list' %}">
+          {% csrf_token %}
+        </form>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
